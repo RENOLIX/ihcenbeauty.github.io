@@ -3,215 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Réseaux Sociaux</title>
+    <title>Bio Links | SITEMAGIQUE</title>
+    
+    <!-- Icônes professionnelles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Bibliothèque QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <style>
         :root {
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --text-main: #1c1e21;
-            --text-muted: #65676b;
-            --primary-color: #007bff;
-            --hover-color: #e4e6eb;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --radius: 16px;
+            /* Dégradé Apparent Beige et Rose */
+            --bg-gradient: linear-gradient(180deg, #f5e6d3 0%, #ff9a9e 100%);
+            --btn-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            /* Rose Beige Fluo pour la marque */
+            --fluo-rose: #ff3385; 
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            color: var(--text-main);
+            padding: 30px 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 450px;
-            background: var(--card-bg);
-            padding: 40px 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            max-width: 400px;
             text-align: center;
+            flex-grow: 1;
         }
 
-        .profile-pic {
-            font-size: 60px;
-            background: #f8f9fa;
-            width: 100px;
-            height: 100px;
-            line-height: 100px;
+        /* PHOTO DE PROFIL - AUCUN CONTOUR */
+        .profile-img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin: 0 auto 15px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            margin: 0 auto 20px;
+            object-fit: cover;
+            display: block;
+            border: none; /* Pas de contour */
+            box-shadow: none; /* Pas d'ombre */
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
+            font-weight: 800;
             margin-bottom: 8px;
+            color: #2d3436;
         }
 
-        p.bio {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
+        .bio {
+            font-size: 1rem;
+            color: #4a4a4a;
+            margin-bottom: 35px;
+            font-weight: 500;
         }
 
-        .links-container {
+        /* BOUTONS DE LIENS */
+        .links-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 40px;
+            gap: 15px;
         }
 
-        .link-card {
+        .link-item {
             display: flex;
             align-items: center;
-            padding: 14px 20px;
-            background: var(--bg-color);
-            text-decoration: none;
+            padding: 18px 25px;
+            background: var(--btn-bg);
             color: var(--text-main);
-            border-radius: var(--radius);
-            font-weight: 600;
-            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        .link-card:hover {
-            background: var(--hover-color);
-            transform: translateY(-2px);
+        .link-item:hover {
+            transform: scale(1.03);
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-        .link-card .icon {
-            font-size: 1.4rem;
-            margin-right: 15px;
-            width: 30px;
+        .link-item i {
+            font-size: 1.5rem;
+            width: 35px;
             text-align: center;
         }
 
-        .link-card .label {
+        /* Couleurs officielles des réseaux */
+        .fa-instagram { color: #E1306C; }
+        .fa-facebook { color: #1877F2; }
+        .fa-tiktok { color: #000000; }
+        .fa-snapchat { color: #FFFC00; text-shadow: 0 0 1px #000; }
+        .fa-phone { color: #2ecc71; }
+        .fa-envelope { color: #e74c3c; }
+        .fa-globe { color: #3498db; }
+
+        .link-text {
             flex-grow: 1;
-            text-align: left;
+            text-align: center;
+            margin-right: 35px;
         }
 
+        /* SECTION QR CODE */
         .qr-section {
-            border-top: 1px solid #eee;
-            padding-top: 30px;
+            margin-top: 50px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
         }
 
-        .qr-section h2 {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: var(--text-muted);
+        .qr-section p {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-weight: 800;
         }
 
         #qrcode {
-            background: white;
+            background: #ffffff;
             padding: 15px;
+            border-radius: 15px;
             display: inline-block;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        canvas {
-            max-width: 100%;
-            height: auto !important;
+        /* FOOTER AVEC EFFET FLUO */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
         }
 
-        .footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .brand-fluo {
+            color: var(--fluo-rose);
+            font-weight: 900;
+            text-shadow: 0 0 8px rgba(255, 51, 133, 0.4);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 400px) {
+            h1 { font-size: 1.5rem; }
+            .link-item { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="profile-pic">👤</div>
-    <h1>Nom du Client</h1>
-    <p class="bio">Bienvenue sur ma page officielle. Retrouvez tous mes liens ci-dessous.</p>
+    <div class="container">
+        <!-- Photo de profil issue du fichier ihcen.png -->
+        <img src="ihcen.png" alt="Profil" class="profile-img">
+        
+        <h1>Nom du Client</h1>
+        <p class="bio">Expertise & Créativité Digitale</p>
 
-    <div class="links-container">
-        <a href="https://instagram.com" target="_blank" class="link-card">
-            <span class="icon">📸</span>
-            <span class="label">Instagram</span>
-        </a>
-        <a href="https://twitter.com" target="_blank" class="link-card">
-            <span class="icon">🐦</span>
-            <span class="label">Twitter / X</span>
-        </a>
-        <a href="https://linkedin.com" target="_blank" class="link-card">
-            <span class="icon">💼</span>
-            <span class="label">LinkedIn</span>
-        </a>
-        <a href="https://facebook.com" target="_blank" class="link-card">
-            <span class="icon">📘</span>
-            <span class="label">Facebook</span>
-        </a>
-        <a href="mailto:contact@exemple.com" class="link-card">
-            <span class="icon">✉️</span>
-            <span class="label">Contact Email</span>
-        </a>
+        <div class="links-list">
+            <a href="https://votre-site.com" target="_blank" class="link-item">
+                <i class="fas fa-globe"></i>
+                <span class="link-text">Site Web</span>
+            </a>
+
+            <a href="https://instagram.com/pseudo" target="_blank" class="link-item">
+                <i class="fab fa-instagram"></i>
+                <span class="link-text">Instagram</span>
+            </a>
+
+            <a href="https://facebook.com/page" target="_blank" class="link-item">
+                <i class="fab fa-facebook"></i>
+                <span class="link-text">Facebook</span>
+            </a>
+
+            <a href="https://tiktok.com/@pseudo" target="_blank" class="link-item">
+                <i class="fab fa-tiktok"></i>
+                <span class="link-text">TikTok</span>
+            </a>
+
+            <a href="https://snapchat.com/add/pseudo" target="_blank" class="link-item">
+                <i class="fab fa-snapchat"></i>
+                <span class="link-text">Snapchat</span>
+            </a>
+
+            <a href="tel:+33600000000" class="link-item">
+                <i class="fas fa-phone"></i>
+                <span class="link-text">Appeler</span>
+            </a>
+
+            <a href="mailto:contact@email.com" class="link-item">
+                <i class="fas fa-envelope"></i>
+                <span class="link-text">Email</span>
+            </a>
+        </div>
+
+        <div class="qr-section">
+            <p>Scanner mon profil</p>
+            <!-- Le QR Code sera généré ici -->
+            <div id="qrcode"></div>
+        </div>
     </div>
 
-    <div class="qr-section">
-        <h2>Scanner pour partager</h2>
-        <div id="qrcode"></div>
-        <p style="font-size: 0.75rem; color: #999; margin-top: 10px;">Scannez ce code pour ouvrir ce site</p>
-    </div>
+    <!-- Footer personnalisé -->
+    <footer>
+        &copy; 2026 • Developed by <span class="brand-fluo">SITEMAGIQUE</span>
+    </footer>
 
-    <div class="footer">
-        &copy; 2024 • Créé avec ❤️
-    </div>
-</div>
+    <script>
+        // Utilisation de l'URL actuelle du site
+        var siteUrl = window.location.href;
 
-<!-- Mini QR Code Generator Library -->
-<script>
-/**
- * Un générateur de QR Code minimaliste en JS pur
- * Adapté pour fonctionner sans dépendances externes.
- */
-var QRCode=function(){function q(a){this.typeNumber=a;this.modules=null;this.moduleCount=0;this.dataCache=null;this.dataList=[]}q.prototype={addData:function(a){this.dataList.push(new n(a));this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,b){this.moduleCount=4*this.typeNumber+17;this.modules=Array(this.moduleCount);for(var c=0;c<this.moduleCount;c++){this.modules[c]=Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++)this.modules[c][d]=null}this.setupPositionProbePattern(0,0);this.setupPositionProbePattern(this.moduleCount-7,0);this.setupPositionProbePattern(0,this.moduleCount-7);this.setupPositionAdjustPattern();this.setupTimingPattern();this.setupTypeInfo(a,b);7<=this.typeNumber&&this.setupTypeNumber(a);null==this.dataCache&&(this.dataCache=q.createData(this.typeNumber,this.dataList));this.mapData(this.dataCache,b)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=0<=c&&6>=c&&(0==d||6==d)||0<=d&&6>=d&&(0==c||6==c)||2<=c&&4>=c&&2<=d&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=r.getLostPoint(this);if(0==c||a>d)a=d,b=c}return b},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(a=8;a<this.moduleCount-8;a++)null==this.modules[6][a]&&(this.modules[6][a]=0==a%2)},setupPositionAdjustPattern:function(){for(var a=r.getAlignmentPattern(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var f=-2;2>=f;f++)for(var g=-2;2>=g;g++)this.modules[d+f][e+g]=-2==f||2==f||-2==g||2==g||0==f&&0==g?!0:!1}},setupTypeNumber:function(a){for(var b=r.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(b>>c&1);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(c=0;18>c;c++)d=!a&&1==(b>>c&1),this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d},setupTypeInfo:function(a,b){for(var c=r.getBCHTypeInfo(1<<3|b),d=0;15>d;d++){var e=!a&&1==(c>>d&1);11>d?this.modules[d<6?d:d<8?d+1:this.moduleCount-15+d][8]=e:this.modules[8][this.moduleCount-(d-10)]=e}for(d=0;15>d;d++)e=!a&&1==(c>>d&1),8>d?this.modules[8][this.moduleCount-d-1]=e:this.modules[d<9?15-d+7:15-d+8][8]=e;this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,f=0,g=this.moduleCount-1;0<g;g-=2)for(6==g&&g--;;){for(var h=0;2>h;h++)if(null==this.modules[d][g-h]){var k=!1;f<a.length&&(k=1==(a[f]>>e&1));r.getMask(b,d,g-h)&&(k=!k);this.modules[d][g-h]=k;e--;-1==e&&(f++,e=7)}d+=c;if(0>d||this.moduleCount<=d){d-=c;c=-c;break}}}};q.createData=function(a,b){for(var c=p.getRSBlocks(a,1),d=new t,e=0;e<b.length;e++){var f=b[e];d.put(f.mode,4);d.put(f.getLength(),r.getLengthInBits(f.mode,a));f.write(d)}for(e=f=0;e<c.length;e++)f+=c[e].dataCount;if(d.getLengthInBits()>8*f)throw Error("code length overflow. ("+d.getLengthInBits()+">"+8*f+")");for(d.getLengthInBits()+4<=8*f&&d.put(0,4);0!=d.getLengthInBits()%8;)d.putBit(!1);for(;!(d.getLengthInBits()>=8*f);){d.put(236,8);if(d.getLengthInBits()>=8*f)break;d.put(17,8)}return q.createBytes(d,c)};q.createBytes=function(a,b){for(var c=0,d=0,e=0,f=Array(b.length),g=Array(b.length),h=0;h<b.length;h++){var k=b[h].dataCount,l=b[h].totalCount-k;d=Math.max(d,k);e=Math.max(e,l);f[h]=Array(k);for(var m=0;m<f[h].length;m++)f[h][m]=255&a.buffer[m+c];c+=k;var n=r.getErrorCorrectPolynomial(l),p=(new u(f[h],n.getLength()-1)).mod(n);g[h]=Array(n.getLength()-1);for(m=0;m<g[h].length;m++)k=m+p.getLength()-g[h].length,g[h][m]=0<=k?p.get(k):0}for(m=k=0;m<b.length;m++)k+=b[m].totalCount;a=Array(k);for(m=c=0;m<d;m++)for(h=0;h<b.length;h++)m<f[h].length&&(a[c++]=f[h][m]);for(m=0;m<e;m++)for(h=0;h<b.length;h++)m<g[h].length&&(a[c++]=g[h][m]);return a};var n=function(a){this.mode=4;this.data=a};n.prototype={getLength:function(){return this.data.length},write:function(a){for(var b=0;b<this.data.length;b++)a.put(this.data.charCodeAt(b),8)}};var r={getBCHTypeInfo:function(a){for(var b=a<<10;0<=r.getBCHDigit(b)-r.getBCHDigit(1335);)b^=1335<<(r.getBCHDigit(b)-r.getBCHDigit(1335));return(a<<10|b)^21522},getBCHTypeNumber:function(a){for(var b=a<<12;0<=r.getBCHDigit(b)-r.getBCHDigit(7973);)b^=7973<<(r.getBCHDigit(b)-r.getBCHDigit(7973));return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getAlignmentPattern:function(a){return w[a-1]},getMask:function(a,b,c){switch(a){case 0:return 0==(b+c)%2;case 1:return 0==b%2;case 2:return 0==c%3;case 3:return 0==(b+c)%3;case 4:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case 5:return 0==b*c%2+b*c%3;case 6:return 0==(b*c%2+b*c%3)%2;case 7:return 0==(b*c%3+(b+c)%2)%2;default:throw Error("bad maskPattern:"+a);}},getErrorCorrectPolynomial:function(a){for(var b=new u([1],0),c=0;c<a;c++)b=b.multiply(new u([1,v.gexp(c)],0));return b},getLengthInBits:function(a,b){if(1<=b&&10>b)switch(a){case 1:return 10;case 2:return 9;case 4:return 8;case 8:return 8;default:throw Error("mode:"+a);}else if(27>b)switch(a){case 1:return 12;case 2:return 11;case 4:return 16;case 8:return 10;default:throw Error("mode:"+a);}else if(41>b)switch(a){case 1:return 14;case 2:return 13;case 4:return 16;case 8:return 12;default:throw Error("mode:"+a);}else throw Error("type:"+b);},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;d<b;d++)for(var e=0;e<b;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||b<=d+h))for(var k=-1;1>=k;k++)0>e+k||b<=e+k||0==h&&0==k||g==a.isDark(d+h,e+k)&&f++;5<f&&(c+=3+f-5)}for(d=0;d<b-1;d++)for(e=0;e<b-1;e++)f=0,a.isDark(d,e)&&f++,a.isDark(d+1,e)&&f++,a.isDark(d,e+1)&&f++,a.isDark(d+1,e+1)&&f++,(0==f||4==f)&&(c+=3);for(d=0;d<b;d++)for(e=0;e<b-6;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(e=0;e<b;e++)for(d=0;d<b-6;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(e=f=0;e<b;e++)for(d=0;d<b;d++)a.isDark(d,e)&&f++;a=Math.abs(100*f/b/b-50)/5;return c+10*a}},v={glog:function(a){if(1>a)throw Error("glog("+a+")");return x[a]},gexp:function(a){for(;0>a;)a+=255;for(;255<=a;)a-=255;return y[a]}},x=Array(256),y=Array(256),z=0;256>z;z++)y[z]=142>z?1<<z:y[z-37]^y[z-38]^y[z-43]^y[z-45];for(z=0;255>z;z++)x[y[z]]=z;var u=function(a,b){if(void 0==a.length)throw Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]};u.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=v.gexp(v.glog(this.get(c))+v.glog(a.get(d)));return new u(b,0)},mod:function(a){if(0>this.getLength()-a.getLength())return this;for(var b=v.glog(this.get(0))-v.glog(a.get(0)),c=Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(d=0;d<a.getLength();d++)c[d]^=v.gexp(v.glog(a.get(d))+b);return(new u(c,0)).mod(a)}};var p=function(a,b){this.totalCount=a;this.dataCount=b};p.RS_BLOCK_TABLE=[[1,26,19],[1,34,26],[1,44,34],[1,58,44],[1,72,58],[2,91,70],[2,108,84],[2,130,102],[2,151,119],[2,180,141]];p.getRSBlocks=function(a,b){var c=p.getRsBlockTable(a,b);if(void 0==c)throw Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;f<d;f++)for(var g=c[3*f+0],h=c[3*f+1],k=c[3*f+2],l=0;l<g;l++)e.push(new p(h,k));return e};p.getRsBlockTable=function(a,b){switch(b){case 1:return p.RS_BLOCK_TABLE[a-1]}};var t=function(){this.buffer=[];this.length=0};t.prototype={get:function(a){return 1==(this.buffer[Math.floor(a/8)]>>>7-a%8&1)},put:function(a,b){for(var c=0;c<b;c++)this.putBit(1==(a>>>b-c-1&1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0);a&&(this.buffer[b]|=128>>>this.length%8);this.length++}};var w=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50]];return q}();
-
-// Initialisation du QR code
-window.onload = function() {
-    var qr = new QRCode(4); // Version 4 pour une capacité suffisante
-    
-    // On utilise l'URL actuelle du site
-    var currentUrl = window.location.href;
-    
-    qr.addData(currentUrl);
-    qr.make();
-    
-    var size = 180;
-    var canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    var ctx = canvas.getContext('2d');
-    
-    var count = qr.getModuleCount();
-    var cellWidth = size / count;
-    
-    for (var r = 0; r < count; r++) {
-        for (var c = 0; c < count; c++) {
-            ctx.fillStyle = qr.isDark(r, c) ? "#000000" : "#ffffff";
-            ctx.fillRect(c * cellWidth, r * cellWidth, cellWidth, cellWidth);
-        }
-    }
-    
-    document.getElementById('qrcode').appendChild(canvas);
-};
-</script>
-
+        // Génération du QR Code NOIR
+        new QRCode(document.getElementById("qrcode"), {
+            text: siteUrl,
+            width: 160,
+            height: 160,
+            colorDark : "#000000", // NOIR PUR
+            colorLight : "#ffffff", // FOND BLANC
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
 </body>
 </html>
